@@ -14,7 +14,7 @@ public class InfoResponse {
     private String track;
     private String github_file_url;
     private String github_repo_url;
-    private int status_code = 200;
+    private final int status_code = 200;
 
 }
 
