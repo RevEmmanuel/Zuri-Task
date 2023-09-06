@@ -24,7 +24,7 @@ public class InfoResponseController {
         String currentUtcTime = utcFormat.format(new Date());
 
         // GitHub URLs
-        String githubFileUrl = "https://github.com/username/repo/blob/main/file_name.ext";
+        String githubFileUrl = "https://github.com/RevEmmanuel/Zuri-Task/blob/main/src/main/java/hng/zuriinternship/tasks/controller/InfoResponseController.java";
         String githubRepoUrl = "https://github.com/RevEmmanuel/Zuri-Task";
 
         return new InfoResponse(slack_name, currentDay, currentUtcTime, track, githubFileUrl, githubRepoUrl);
