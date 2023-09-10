@@ -42,7 +42,7 @@ public class PersonController {
     @GetMapping("")
     public ResponseEntity<PersonDto> getPersonByName(
             @RequestParam
-            @Parameter(name = "FindPersonRequest", description = "Contains the name of the required person",
+            @Parameter(name = "name", description = "The name of the required person",
                     required = true)
             @Valid String name) {
         return new ResponseEntity<>(personService.findPersonByName(name), HttpStatus.OK);
