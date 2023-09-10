@@ -38,7 +38,6 @@ public class PersonController {
                     required = true, example = "Mark Essien")
             @Valid @NotNull(message = "Name cannot be null")
             @NotBlank(message = "Name cannot be blank")
-            @Pattern(regexp = "^[a-zA-Z]+$", message = "Name should only contain letters")
             String name) {
         PersonDto response = personService.createPerson(name);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -54,7 +53,6 @@ public class PersonController {
                     required = true, example = "Mark Essien")
             @Valid @NotNull(message = "Name cannot be null")
             @NotBlank(message = "Name cannot be blank")
-            @Pattern(regexp = "^[a-zA-Z]+$", message = "Name should only contain letters")
             String name) {
         PersonDto foundPerson = personService.findPersonByName(name);
         return new ResponseEntity<>(foundPerson, HttpStatus.OK);

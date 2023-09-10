@@ -13,7 +13,6 @@ public class UpdatePersonRequest {
 
     @NotNull(message = "Name cannot be null")
     @NotBlank(message = "Name cannot be blank")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Name should only contain letters")
     private String name;
 
 }
