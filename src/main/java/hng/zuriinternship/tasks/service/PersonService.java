@@ -10,7 +10,7 @@ public interface PersonService {
 
     PersonDto createPerson(CreatePersonRequest createPerson);
 
-    PersonDto findPersonByName(FindPersonRequest findPerson);
+    PersonDto findPersonByName(String name);
 
     List<PersonDto> getAllPersons();
 

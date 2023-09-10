@@ -8,4 +8,5 @@ public class FindPersonRequest {
 
     @NotBlank(message = "Name cannot be blank")
     private String name;
+
 }

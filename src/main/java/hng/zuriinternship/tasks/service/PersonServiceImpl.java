@@ -1,7 +1,6 @@
 package hng.zuriinternship.tasks.service;
 
 import hng.zuriinternship.tasks.data.dtos.requests.CreatePersonRequest;
-import hng.zuriinternship.tasks.data.dtos.requests.FindPersonRequest;
 import hng.zuriinternship.tasks.data.dtos.requests.UpdatePersonRequest;
 import hng.zuriinternship.tasks.data.dtos.responses.PersonDto;
 import hng.zuriinternship.tasks.data.models.Person;
@@ -11,7 +10,6 @@ import hng.zuriinternship.tasks.exceptions.PersonNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +28,8 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public PersonDto findPersonByName(FindPersonRequest personRequest) {
-        Person foundPerson = personRepository.findByName(personRequest.getName()).orElseThrow(() -> new PersonNotFoundException("Person with name " + personRequest.getName() + " not found!"));
+    public PersonDto findPersonByName(String name) {
+        Person foundPerson = personRepository.findByName(name).orElseThrow(() -> new PersonNotFoundException("Person with name " + name + " not found!"));
         return mapPersonToDto(foundPerson);
     }
 

@@ -44,8 +44,8 @@ public class PersonController {
             @RequestParam
             @Parameter(name = "FindPersonRequest", description = "Contains the name of the required person",
                     required = true)
-            @Valid FindPersonRequest findPersonRequest) {
-        return new ResponseEntity<>(personService.findPersonByName(findPersonRequest), HttpStatus.OK);
+            @Valid String name) {
+        return new ResponseEntity<>(personService.findPersonByName(name), HttpStatus.OK);
     }
 
     @Operation(summary = "Get all persons",
