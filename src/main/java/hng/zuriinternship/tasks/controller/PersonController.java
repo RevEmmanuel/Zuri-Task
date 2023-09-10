@@ -1,5 +1,7 @@
 package hng.zuriinternship.tasks.controller;
 
+import hng.zuriinternship.tasks.data.dtos.requests.CreatePersonRequest;
+import hng.zuriinternship.tasks.data.dtos.requests.FindPersonRequest;
 import hng.zuriinternship.tasks.data.dtos.requests.UpdatePersonRequest;
 import hng.zuriinternship.tasks.data.dtos.responses.PersonDto;
 import hng.zuriinternship.tasks.service.PersonService;
@@ -7,10 +9,8 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +18,11 @@ import java.util.List;
 
 @RestController
 @OpenAPIDefinition
+@AllArgsConstructor
 @RequestMapping(value = "/api")
 public class PersonController {
 
     private final PersonService personService;
-
-    @Autowired
-    public PersonController(PersonService personService) {
-        this.personService = personService;
-    }
 
     // Create
     @Operation(summary = "Create a new person entity",
@@ -34,13 +30,10 @@ public class PersonController {
     @PostMapping("")
     public ResponseEntity<PersonDto> createPerson(
             @RequestBody
-            @Parameter(name = "name", description = "The name of the person entity to be created",
-                    required = true, example = "Mark Essien")
-            @Valid @NotNull(message = "Name cannot be null")
-            @NotBlank(message = "Name cannot be blank")
-            String name) {
-        PersonDto response = personService.createPerson(name);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+            @Parameter(name = "CreatePersonRequest", description = "Contains the name of the person entity to be created",
+                    required = true)
+            @Valid CreatePersonRequest createPersonRequest) {
+        return new ResponseEntity<>(personService.createPerson(createPersonRequest), HttpStatus.CREATED);
     }
 
     // Read
@@ -49,21 +42,17 @@ public class PersonController {
     @GetMapping("")
     public ResponseEntity<PersonDto> getPersonByName(
             @RequestParam
-            @Parameter(name = "name", description = "The name of the required person",
-                    required = true, example = "Mark Essien")
-            @Valid @NotNull(message = "Name cannot be null")
-            @NotBlank(message = "Name cannot be blank")
-            String name) {
-        PersonDto foundPerson = personService.findPersonByName(name);
-        return new ResponseEntity<>(foundPerson, HttpStatus.OK);
+            @Parameter(name = "FindPersonRequest", description = "Contains the name of the required person",
+                    required = true)
+            @Valid FindPersonRequest findPersonRequest) {
+        return new ResponseEntity<>(personService.findPersonByName(findPersonRequest), HttpStatus.OK);
     }
 
     @Operation(summary = "Get all persons",
             description = "Returns a Response entity containing all existing persons in a List.")
     @GetMapping("/all")
     public ResponseEntity<List<PersonDto>> findAllPersons() {
-        List<PersonDto> persons = personService.getAllPersons();
-        return new ResponseEntity<>(persons, HttpStatus.OK);
+        return new ResponseEntity<>(personService.getAllPersons(), HttpStatus.OK);
     }
 
     // Update
@@ -76,8 +65,7 @@ public class PersonController {
                     required = true)
             @Valid
             UpdatePersonRequest updatePersonRequest) {
-        PersonDto updatePersonDetailsResponse = personService.updatePersonByName(updatePersonRequest.getId(), updatePersonRequest.getName());
-        return new ResponseEntity<>(updatePersonDetailsResponse, HttpStatus.OK);
+        return new ResponseEntity<>(personService.updatePersonById(updatePersonRequest), HttpStatus.OK);
     }
 
 
@@ -91,8 +79,7 @@ public class PersonController {
                     required = true, example = "5")
             @Valid @NotNull(message = "Id cannot be null")
             Long id) {
-        String message = personService.deletePersonByName(id);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseEntity<>(personService.deletePersonById(id), HttpStatus.OK);
     }
 
     // Documentation

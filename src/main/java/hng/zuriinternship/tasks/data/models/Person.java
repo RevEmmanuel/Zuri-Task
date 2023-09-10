@@ -21,7 +21,6 @@ public class Person {
     private Long id;
 
     @Column(unique = true)
-    @NotBlank(message = "Name cannot be blank")
     private String name;
 
 }

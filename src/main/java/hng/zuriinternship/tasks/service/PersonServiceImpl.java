@@ -1,5 +1,8 @@
 package hng.zuriinternship.tasks.service;
 
+import hng.zuriinternship.tasks.data.dtos.requests.CreatePersonRequest;
+import hng.zuriinternship.tasks.data.dtos.requests.FindPersonRequest;
+import hng.zuriinternship.tasks.data.dtos.requests.UpdatePersonRequest;
 import hng.zuriinternship.tasks.data.dtos.responses.PersonDto;
 import hng.zuriinternship.tasks.data.models.Person;
 import hng.zuriinternship.tasks.data.repository.PersonRepository;
@@ -17,18 +20,18 @@ public class PersonServiceImpl implements PersonService{
     private final PersonRepository personRepository;
 
     @Override
-    public PersonDto createPerson(String name) {
-        if (personRepository.existsByName(name)) throw new NameAlreadyExistsException("A user with this name already exists!");
+    public PersonDto createPerson(CreatePersonRequest createPersonRequest) {
+        if (personRepository.existsByName(createPersonRequest.getName())) throw new NameAlreadyExistsException("A user with this name already exists!");
         Person createdPerson = Person.builder()
-                .name(name)
+                .name(createPersonRequest.getName())
                 .build();
         Person savedPerson = personRepository.save(createdPerson);
         return mapPersonToDto(savedPerson);
     }
 
     @Override
-    public PersonDto findPersonByName(String personName) {
-        Person foundPerson = personRepository.findByName(personName).orElseThrow(() -> new PersonNotFoundException("Person with name " + personName + " not found!"));
+    public PersonDto findPersonByName(FindPersonRequest personRequest) {
+        Person foundPerson = personRepository.findByName(personRequest.getName()).orElseThrow(() -> new PersonNotFoundException("Person with name " + personRequest.getName() + " not found!"));
         return mapPersonToDto(foundPerson);
     }
 
@@ -41,15 +44,15 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public PersonDto updatePersonByName(Long id, String updatedName) {
-        Person personToBeUpdated = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException("Person with id " + id + " not found!"));
-        personToBeUpdated.setName(updatedName);
+    public PersonDto updatePersonById(UpdatePersonRequest updatePersonRequest) {
+        Person personToBeUpdated = personRepository.findById(updatePersonRequest.getId()).orElseThrow(() -> new PersonNotFoundException("Person with id " + updatePersonRequest.getId() + " not found!"));
+        personToBeUpdated.setName(updatePersonRequest.getName());
         Person updatedPerson = personRepository.save(personToBeUpdated);
         return mapPersonToDto(updatedPerson);
     }
 
     @Override
-    public String deletePersonByName(Long id) {
+    public String deletePersonById(Long id) {
         Person personToBeDeleted = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException("Person with id " + id + " not found!"));
         personRepository.delete(personToBeDeleted);
         return "SUCCESSFUL";
