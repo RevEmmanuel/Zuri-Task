@@ -12,7 +12,7 @@ import java.util.Date;
 @RequestMapping("")
 public class InfoResponseController {
 
-    @GetMapping("/api")
+    @GetMapping("/api/stage-1")
     public InfoResponse getInfo(
             @RequestParam String slack_name,
             @RequestParam String track
