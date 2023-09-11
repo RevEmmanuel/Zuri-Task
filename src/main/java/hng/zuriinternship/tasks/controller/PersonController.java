@@ -68,13 +68,12 @@ public class PersonController {
         return new ResponseEntity<>(personService.updatePersonById(updatePersonRequest), HttpStatus.OK);
     }
 
-
     // Delete
     @Operation(summary = "Delete an existing person details",
             description = "Returns a Response entity HTTP status code")
-    @DeleteMapping("")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePerson(
-            @RequestBody
+            @PathVariable
             @Parameter(name = "id", description = "The id of the person to be deleted",
                     required = true, example = "5")
             @Valid @NotNull(message = "Id cannot be null")
