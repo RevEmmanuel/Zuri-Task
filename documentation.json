@@ -1,0 +1,312 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Zuri Stage 2 Task",
+    "description": "This application handles basic CRUD operations for Person resource.",
+    "contact": {
+      "name": "Adeola Adekunle",
+      "email": "adeolaae1@gmail.com"
+    },
+    "version": "v1"
+  },
+  "externalDocs": {
+    "description": "Postman Documentation",
+    "url": "https://documenter.getpostman.com/view/24879226/2s9YC1XF51"
+  },
+  "servers": [
+    {
+      "url": "https://zuri-task-production.up.railway.app",
+      "description": "PROD server"
+    },
+    {
+      "url": "http://localhost:5500",
+      "description": "Localhost server"
+    }
+  ],
+  "paths": {
+    "/api": {
+      "get": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Get A Particular Person by the person's name",
+        "description": "Returns a Response entity containing the requested person and HTTP status code. If the person is not found, an exception is thrown.",
+        "operationId": "getPersonByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The name of the required person",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Update the details of an existing person",
+        "description": "Returns a Response entity containing the updated person's details and HTTP status code.\nIt takes in the name of the stock to be updated as well as an UpdatePersonRequest containing the details to be updated in the person.",
+        "operationId": "updatePersonDetails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePersonRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Create a new person entity",
+        "description": "Returns a Response entity containing the new person's details and HTTP status code.\nIt takes in a request body that contains the details required to create a new stock.",
+        "operationId": "createPerson",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePersonRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stage-1": {
+      "get": {
+        "tags": [
+          "info-response-controller"
+        ],
+        "operationId": "getInfo",
+        "parameters": [
+          {
+            "name": "slack_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "track",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/info": {
+      "get": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Get full information about the project",
+        "operationId": "landingPage",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/all": {
+      "get": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Get all persons",
+        "description": "Returns a Response entity containing all existing persons in a List.",
+        "operationId": "findAllPersons",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PersonDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/{id}": {
+      "delete": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Delete an existing person details",
+        "description": "Returns a Response entity HTTP status code",
+        "operationId": "deletePerson",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the person to be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UpdatePersonRequest": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "description": "Contains the id of the required person and the new name"
+      },
+      "PersonDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "CreatePersonRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "description": "Contains the name of the person entity to be created"
+      },
+      "InfoResponse": {
+        "type": "object",
+        "properties": {
+          "slack_name": {
+            "type": "string"
+          },
+          "current_day": {
+            "type": "string"
+          },
+          "utc_time": {
+            "type": "string"
+          },
+          "track": {
+            "type": "string"
+          },
+          "github_file_url": {
+            "type": "string"
+          },
+          "github_repo_url": {
+            "type": "string"
+          },
+          "status_code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}
