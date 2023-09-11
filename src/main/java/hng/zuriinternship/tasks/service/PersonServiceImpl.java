@@ -19,9 +19,9 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public PersonDto createPerson(CreatePersonRequest createPersonRequest) {
-        if (personRepository.existsByName(createPersonRequest.getName())) throw new NameAlreadyExistsException("A user with this name already exists!");
+        if (personRepository.existsByNameEqualsIgnoreCase(createPersonRequest.getName().trim())) throw new NameAlreadyExistsException("A user with this name already exists!");
         Person createdPerson = Person.builder()
-                .name(createPersonRequest.getName())
+                .name(createPersonRequest.getName().trim())
                 .build();
         Person savedPerson = personRepository.save(createdPerson);
         return mapPersonToDto(savedPerson);
@@ -29,7 +29,7 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public PersonDto findPersonByName(String name) {
-        Person foundPerson = personRepository.findByName(name).orElseThrow(() -> new PersonNotFoundException("Person with name " + name + " not found!"));
+        Person foundPerson = personRepository.findByNameEqualsIgnoreCase(name.trim()).orElseThrow(() -> new PersonNotFoundException("Person with name " + name + " not found!"));
         return mapPersonToDto(foundPerson);
     }
 
@@ -44,7 +44,7 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public PersonDto updatePersonById(UpdatePersonRequest updatePersonRequest) {
         Person personToBeUpdated = personRepository.findById(updatePersonRequest.getId()).orElseThrow(() -> new PersonNotFoundException("Person with id " + updatePersonRequest.getId() + " not found!"));
-        personToBeUpdated.setName(updatePersonRequest.getName());
+        personToBeUpdated.setName(updatePersonRequest.getName().trim());
         Person updatedPerson = personRepository.save(personToBeUpdated);
         return mapPersonToDto(updatedPerson);
     }
