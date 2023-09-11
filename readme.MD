@@ -130,7 +130,8 @@ Example Response:
 ```
 
 * ### Delete a Person
-  To delete a person by name, send a `DELETE` request to the `/api` endpoint with the id in the request body.
+  To delete a person by name, send a `DELETE` request to the `/api/{id}` endpoint with the id as a path variable.
+
 Example Response:
 ```text
 SUCCESSFUL

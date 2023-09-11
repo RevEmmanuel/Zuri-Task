@@ -25,6 +25,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 				@Server(
 						url = "https://zuri-task-production.up.railway.app",
 						description = "PROD server"
+				),
+				@Server(
+						url = "http://localhost:5500",
+						description = "Localhost server"
 				)
 		},
 		externalDocs = @ExternalDocumentation(
