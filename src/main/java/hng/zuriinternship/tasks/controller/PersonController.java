@@ -1,7 +1,6 @@
 package hng.zuriinternship.tasks.controller;
 
 import hng.zuriinternship.tasks.data.dtos.requests.CreatePersonRequest;
-import hng.zuriinternship.tasks.data.dtos.requests.FindPersonRequest;
 import hng.zuriinternship.tasks.data.dtos.requests.UpdatePersonRequest;
 import hng.zuriinternship.tasks.data.dtos.responses.PersonDto;
 import hng.zuriinternship.tasks.service.PersonService;
@@ -10,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +44,8 @@ public class PersonController {
             @RequestParam
             @Parameter(name = "name", description = "The name of the required person",
                     required = true)
-            @Valid String name) {
+            @Valid @Pattern(regexp = "^[A-Za-z ]+$", message = "Invalid characters. Only alphabets and spaces are allowed!")
+            String name) {
         return new ResponseEntity<>(personService.findPersonByName(name), HttpStatus.OK);
     }
 
