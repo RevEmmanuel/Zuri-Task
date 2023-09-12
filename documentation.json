@@ -25,37 +25,6 @@
   ],
   "paths": {
     "/api": {
-      "get": {
-        "tags": [
-          "person-controller"
-        ],
-        "summary": "Get A Particular Person by the person's name",
-        "description": "Returns a Response entity containing the requested person and HTTP status code. If the person is not found, an exception is thrown.",
-        "operationId": "getPersonByName",
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "description": "The name of the required person",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/PersonDto"
-                }
-              }
-            }
-          }
-        }
-      },
       "put": {
         "tags": [
           "person-controller"
@@ -103,6 +72,40 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/{name}": {
+      "get": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Get A Particular Person by the person's name",
+        "description": "Returns a Response entity containing the requested person and HTTP status code. If the person is not found, an exception is thrown.",
+        "operationId": "getPersonByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The name of the required person",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z ]+$",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -251,6 +254,7 @@
             "format": "int64"
           },
           "name": {
+            "pattern": "^[A-Za-z ]+$",
             "type": "string"
           }
         },
@@ -275,6 +279,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "pattern": "^[A-Za-z ]+$",
             "type": "string"
           }
         },
