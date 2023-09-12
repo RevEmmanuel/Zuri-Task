@@ -24,7 +24,7 @@
     }
   ],
   "paths": {
-    "/api": {
+    "/api/{id}": {
       "put": {
         "tags": [
           "person-controller"
@@ -32,6 +32,19 @@
         "summary": "Update the details of an existing person",
         "description": "Returns a Response entity containing the updated person's details and HTTP status code.\nIt takes in the name of the stock to be updated as well as an UpdatePersonRequest containing the details to be updated in the person.",
         "operationId": "updatePersonDetails",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the person to be updated",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 5
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -55,6 +68,41 @@
           }
         }
       },
+      "delete": {
+        "tags": [
+          "person-controller"
+        ],
+        "summary": "Delete an existing person details",
+        "description": "Returns a Response entity HTTP status code",
+        "operationId": "deletePerson",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the person to be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api": {
       "post": {
         "tags": [
           "person-controller"
@@ -203,56 +251,16 @@
           }
         }
       }
-    },
-    "/api/{id}": {
-      "delete": {
-        "tags": [
-          "person-controller"
-        ],
-        "summary": "Delete an existing person details",
-        "description": "Returns a Response entity HTTP status code",
-        "operationId": "deletePerson",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The id of the person to be deleted",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "example": 5
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
       "UpdatePersonRequest": {
         "required": [
-          "id",
           "name"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
           "name": {
             "pattern": "^[A-Za-z ]+$",
             "type": "string"
