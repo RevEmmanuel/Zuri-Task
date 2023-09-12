@@ -59,14 +59,19 @@ public class PersonController {
     // Update
     @Operation(summary = "Update the details of an existing person",
             description = "Returns a Response entity containing the updated person's details and HTTP status code.\nIt takes in the name of the stock to be updated as well as an UpdatePersonRequest containing the details to be updated in the person.")
-    @PutMapping("")
+    @PutMapping("/{id}")
     public ResponseEntity<PersonDto> updatePersonDetails(
+            @PathVariable
+            @Parameter(name = "id", description = "The id of the person to be updated",
+                    required = true, example = "5")
+            @Valid @NotNull(message = "Id cannot be null")
+            Long id,
             @RequestBody
             @Parameter(name = "UpdatePersonRequest", description = "Contains the id of the required person and the new name",
                     required = true)
             @Valid
             UpdatePersonRequest updatePersonRequest) {
-        return new ResponseEntity<>(personService.updatePersonById(updatePersonRequest), HttpStatus.OK);
+        return new ResponseEntity<>(personService.updatePersonById(id, updatePersonRequest), HttpStatus.OK);
     }
 
     // Delete

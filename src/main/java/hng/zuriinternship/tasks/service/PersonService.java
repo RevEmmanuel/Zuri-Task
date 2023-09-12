@@ -13,7 +13,7 @@ public interface PersonService {
 
     List<PersonDto> getAllPersons();
 
-    PersonDto updatePersonById(UpdatePersonRequest updatePersonRequest);
+    PersonDto updatePersonById(Long id, UpdatePersonRequest updatePersonRequest);
 
     String deletePersonById(Long id);
 

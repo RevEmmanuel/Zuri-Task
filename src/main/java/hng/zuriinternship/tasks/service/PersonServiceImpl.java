@@ -42,8 +42,8 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public PersonDto updatePersonById(UpdatePersonRequest updatePersonRequest) {
-        Person personToBeUpdated = personRepository.findById(updatePersonRequest.getId()).orElseThrow(() -> new PersonNotFoundException("Person with id " + updatePersonRequest.getId() + " not found!"));
+    public PersonDto updatePersonById(Long id, UpdatePersonRequest updatePersonRequest) {
+        Person personToBeUpdated = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException("Person with id " + id + " not found!"));
         personToBeUpdated.setName(updatePersonRequest.getName().trim());
         Person updatedPerson = personRepository.save(personToBeUpdated);
         return mapPersonToDto(updatedPerson);
