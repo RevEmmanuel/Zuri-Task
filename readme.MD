@@ -11,7 +11,6 @@ This ia a Java Spring boot server application to handle CRUD operations for a Pe
     - [Database Configuration](#configure-the-database)
     - [Build and Run](#build-and-run-the-application)
 - [Schemas and Diagrams](#erd-and-uml-diagrams)
-- [API Endpoints](#api-endpoints)
 - [Testing](#testing)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
@@ -73,69 +72,6 @@ The application will start running on `http://localhost:${SERVER_PORT}`.
 ## ERD and UML Diagrams
 * [ERD Diagram](https://drive.google.com/file/d/1QzqS-Y3_q8tqU1gL8XMDUuH6isIo9Jyh/view?usp=sharing)
 * [UML Diagram](https://drive.google.com/file/d/1T0UnHiEcgQoI18j2kNXrg1GkciuOIt57/view?usp=sharing)
-
-## Api Endpoints
-In this section, you'll find examples of how to interact with the API endpoints to perform various CRUD operations on person entities.
-* ### Create a new Person
-    To create a new person entity, send a `POST` request to the `/api` endpoint with the following JSON request body:
-```json
-{
-  "name": "John Doe"
-}
-```
-Example Response:
-```json
-{
-    "id": 1,
-    "name": "John Doe"
-}
-```
-
-* ### Retrieve a peron by name
-  To retrieve a person by name, send a `GET` request to the `/api` endpoint with the `name` in the request parameters.
-Example Response:
-```json
-{
-    "id": 1,
-    "name": "John Doe"
-}
-```
-
-* ### Retrieve all persons
-  To retrieve all persons, send a `GET` request to the `/api/all` endpoint.
-
-Example Response:
-```json
-[
-  {
-    "id": 1,
-    "name": "John Doe"
-  },
-  {
-    "id": 2,
-    "name": "Jane Smith"
-  }
-]
-```
-
-* ### Update an existing Person
-  To update a person's details by name, send a `PUT` request to the `/api` endpoint with a JSON request body containing the id and the updated details.
-
-Example Response:
-```json
-{
-  "id": 1,
-  "name": "John Doe Jr."
-}
-```
-
-* ### Delete a Person
-  To delete a person by name, send a `DELETE` request to the `/api/{id}` endpoint with the id as a path variable.
-
-Example Response:
-```text
-SUCCESSFUL
-```
 
 ## Testing
 You can run automated tests for the API using the provided test scripts. Make sure you have followed the [Getting Started](#getting-started) steps before running the tests.

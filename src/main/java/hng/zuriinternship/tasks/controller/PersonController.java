@@ -39,9 +39,9 @@ public class PersonController {
     // Read
     @Operation(summary = "Get A Particular Person by the person's name",
             description = "Returns a Response entity containing the requested person and HTTP status code. If the person is not found, an exception is thrown.")
-    @GetMapping("")
+    @GetMapping("/{name}")
     public ResponseEntity<PersonDto> getPersonByName(
-            @RequestParam
+            @PathVariable
             @Parameter(name = "name", description = "The name of the required person",
                     required = true)
             @Valid @Pattern(regexp = "^[A-Za-z ]+$", message = "Invalid characters. Only alphabets and spaces are allowed!")
